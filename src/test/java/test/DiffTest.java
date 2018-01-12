@@ -25,26 +25,26 @@ public class DiffTest extends TestBase {
     @Test
     public void diffTest() throws IOException {
         $(By.id("lst-ib")).sendKeys("gggg");
-        saveScreenshot(getWebDriver().getTitle());
+        //saveScreenshot(getWebDriver().getTitle());
         //makeDif();
 
     }
 
     private void makeDif() throws IOException {
         //Загрузка актуального скриншота
-        File file1 = new File("src/test/screenshots/actual/"+ browserSize +"Google.png");
+        File file1 = new File("src/test/screenshots/actual/" +"Google.png");
         BufferedImage image1 = ImageIO.read(file1);
         Screenshot actual = new Screenshot(image1);
         //Загрузка ожидаемого скриншота
-        File file2 = new File("src/test/screenshots/expected/"+ browserSize +"Google.png");
+        File file2 = new File("src/test/screenshots/expected/" +"Google.png");
         BufferedImage image2 = ImageIO.read(file2);
         Screenshot expected = new Screenshot(image2);
 
         //Создание скриншота с дифом
         ImageDiff diff = new ImageDiffer().makeDiff(actual, expected);
-        File diffFile = new File("src/test/screenshots/diff/"+ browserSize +"diff.png");
+        File diffFile = new File("src/test/screenshots/diff/" +"diff.png");
         ImageIO.write(diff.getMarkedImage(),"png",diffFile);
-        BufferedImage diff1  = ImageIO.read(new File("src/test/screenshots/diff/"+ browserSize +"diff.png"));
+        BufferedImage diff1  = ImageIO.read(new File("src/test/screenshots/diff/"+ "diff.png"));
         //Маркировка скринов для алюра
         Allure.addLabels(new Label().withName("testType").withValue("screenshotDiff"));
         attachScreenshot("diff", (toByteArray(diff1)));
@@ -57,7 +57,10 @@ public class DiffTest extends TestBase {
         File file;
         switch (PropertyLoader.getInstance().getProperty("createNewScreenshots")){
             case "yes":
-                file = new File("src/test/screenshots/expected/"+browserSize+"/" + name + browserSize + ".png");
+
+                file = new File("src/test/screenshots/expected/" + name + ".png");
+                file.mkdir();
+                System.out.println(file.getAbsolutePath());
                 screenshot = new AShot().takeScreenshot(getWebDriver());
                 try {
                     ImageIO.write(screenshot.getImage(),"png",file);
@@ -67,7 +70,7 @@ public class DiffTest extends TestBase {
                 break;
 
             case "no":
-                file = new File("src/test/screenshots/actual/"+browserSize+"/" +name+browserSize + ".png");
+                file = new File("src/test/screenshots/actual/" +name+".png");
                 screenshot = new AShot().takeScreenshot(getWebDriver());
                 try {
                     ImageIO.write(screenshot.getImage(),"png",file);
