@@ -13,6 +13,10 @@ import static com.codeborne.selenide.Configuration.browserSize;
 
 public class ScreenShotListener {
 
+    public static String baseDir = "src/test/screenshots/"+ browserSize;
+    public static String expectedDir = baseDir +  "/expected/" ;
+    public static String actualDir = baseDir +  "/actual/";
+    public static String diffDir = baseDir +  "/diff/";
 
 
     @Attachment(value = "{name}", type = "image/png")
@@ -29,17 +33,21 @@ public class ScreenShotListener {
         }
     }
 
-    public static void createFolders(String rootPath) throws IOException {
-        File resourcesImagesDir = new File("src/test/screenshots");
-        File expectedDir = new File(resourcesImagesDir+"/expected/"+browserSize +"/");
-        File actualDir = new File(resourcesImagesDir+"/actual/"+browserSize +"/");
-        File diffDir = new File(resourcesImagesDir+"/diff/"+browserSize +"/");
-        if (!resourcesImagesDir.exists() || !expectedDir.exists() || !actualDir.exists() || !diffDir.exists()){
-            resourcesImagesDir.mkdir();
-            expectedDir.mkdir();
-            actualDir.mkdir();
-            diffDir.mkdir();
+    public static void createFolders() throws IOException {
+        File resourcesImagesDir = new File(baseDir);
+        File expectedFolder = new File(expectedDir);
+        System.out.println(expectedFolder.getAbsolutePath() );
+        File actualFolder = new File(actualDir);
+        File diffFolder = new File(diffDir);
+        if (!resourcesImagesDir.exists() || !expectedFolder.exists() || !actualFolder.exists() || !diffFolder.exists()){
+            resourcesImagesDir.mkdirs();
+            expectedFolder.mkdirs();
+            actualFolder.mkdirs();
+            diffFolder.mkdirs();
         }
 
     }
+
+
 }
+
