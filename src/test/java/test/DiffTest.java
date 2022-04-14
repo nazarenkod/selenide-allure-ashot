@@ -22,9 +22,8 @@ import static utils.ScreenShotListener.toByteArray;
 public class DiffTest extends TestBase {
 
 
-    @Test
-    public void diffTest() throws IOException {
-        $(By.id("lst-ib")).sendKeys("gggg");
+@Test
+    public void diffTest() throws IOException {$(By.id("lst-ib")).sendKeys("gggg");
         //saveScreenshot(getWebDriver().getTitle());
         //makeDif();
 
